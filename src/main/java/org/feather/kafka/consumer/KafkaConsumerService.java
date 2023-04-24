@@ -1,0 +1,29 @@
+package org.feather.kafka.consumer;
+
+import lombok.extern.slf4j.Slf4j;
+import org.apache.kafka.clients.consumer.Consumer;
+import org.apache.kafka.clients.consumer.ConsumerRecord;
+import org.springframework.kafka.annotation.KafkaListener;
+import org.springframework.kafka.support.Acknowledgment;
+import org.springframework.stereotype.Component;
+
+/**
+ * @projectName: kafka-consumer
+ * @package: org.feather.kafka.consumer
+ * @className: KafkaConsumerService
+ * @author: feather(杜雪松)
+ * @description: TODO
+ * @since: 2023-04-24 13:50
+ * @version: 1.0
+ */
+@Slf4j
+@Component
+public class KafkaConsumerService {
+
+    @KafkaListener(groupId = "group2" ,topics = "topic02")
+    public  void  onMessage(ConsumerRecord<String,Object> record, Acknowledgment acknowledgment, Consumer<?,? > consumer){
+       log.info("消费端接受消息:{}",record.value());
+       //手工签收
+        acknowledgment.acknowledge();;
+    }
+}
